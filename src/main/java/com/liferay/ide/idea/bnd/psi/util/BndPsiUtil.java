@@ -197,16 +197,18 @@ public class BndPsiUtil {
 	public static PsiDirectory[] resolvePackage(@NotNull PsiElement psiElement, @NotNull String packageName) {
 		Project project = psiElement.getProject();
 
-		Module module = ModuleUtilCore.findModuleForPsiElement(psiElement);
+		//		INTELLIJ-111 Improve parsing bnd.bnd file
 
-		GlobalSearchScope scope;
+		//		Module module = ModuleUtilCore.findModuleForPsiElement(psiElement);
+		//
+		//		GlobalSearchScope scope;
 
-		if (module == null) {
-			scope = ProjectScope.getAllScope(project);
-		}
-		else {
-			scope = module.getModuleWithDependenciesAndLibrariesScope(false);
-		}
+		//		if (module == null) {
+		//			scope = ProjectScope.getAllScope(project);
+		//		}
+		//		else {
+		//			scope = module.getModuleWithDependenciesAndLibrariesScope(false);
+		//		}
 
 		JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
 
@@ -216,7 +218,7 @@ public class BndPsiUtil {
 			return PsiDirectory.EMPTY_ARRAY;
 		}
 
-		return psiPackage.getDirectories(scope);
+		return psiPackage.getDirectories();
 	}
 
 }
