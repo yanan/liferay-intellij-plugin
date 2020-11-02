@@ -595,9 +595,9 @@ public class LiferayProjectTypeStep extends ModuleWizardStep implements Disposab
 		String card = builder.getBuilderId();
 
 		if (!_customSteps.containsKey(card)) {
-			if (_customSteps.isEmpty()) {
-				Project project = Objects.requireNonNull(_context.getProject());
+			Project project = Objects.requireNonNull(_context.getProject());
 
+			if (LiferayWorkspaceSupport.isFlexibleLiferayWorkspace(project) && _customSteps.isEmpty()) {
 				WorkspaceProvider workspaceProvider = LiferayCore.getWorkspaceProvider(project);
 
 				if (Objects.isNull(workspaceProvider)) {
