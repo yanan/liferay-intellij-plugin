@@ -27,6 +27,8 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiNameHelper;
+import com.intellij.refactoring.psi.PackageNameUtil;
 import com.intellij.ui.DocumentAdapter;
 
 import com.liferay.ide.idea.core.LiferayCore;
@@ -441,6 +443,12 @@ public class LiferayModuleNameLocationComponent implements LiferayWorkspaceSuppo
 			if (answer != Messages.YES) {
 				return false;
 			}
+		}
+
+		if (PackageNameUtil.containsNonIdentifier(
+				PsiNameHelper.getInstance(Objects.requireNonNull(_context.getProject())), moduleName)) {
+
+			throw new ConfigurationException(moduleName + " is not a valid module name", "Validation Error");
 		}
 
 		return true;
